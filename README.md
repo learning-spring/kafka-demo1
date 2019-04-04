@@ -2,7 +2,7 @@
 [Github](https://github.com/learning-spring/kafka-demo1)
 
 ### This demo is to learning how to intergrated Kafka with springboot
-[Kafka Start with sprint boot](https://docs.spring.io/spring-kafka/docs/current/reference/html/_introduction.html#_even_quicker_with_spring_boot)
+[Kafka Start with sprint boot](https://docs.spring.io/spring-kafka/docs/current/reference/#even-quicker-with-spring-boot)
 
 ##Precondition
 - zookeeper available with default port 2181
