@@ -23,6 +23,7 @@ public class TestCase {
     }
 
     public void setData(String data) {
+        if (data == null) return;
         try {
             this.data = data.getBytes("utf-8");
         } catch (UnsupportedEncodingException e) {
