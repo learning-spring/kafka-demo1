@@ -9,36 +9,34 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
 
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
-
 @SpringBootApplication
 @Slf4j
 public class KafkaDemo1Application implements CommandLineRunner {
 
-	public static void main(String[] args) {
-		SpringApplication.run(KafkaDemo1Application.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(KafkaDemo1Application.class, args);
+    }
 
-	@Autowired
-	private KafkaTemplate<String, String> template;
+    @Autowired
+    private KafkaTemplate<String, String> template;
 
-	private final CountDownLatch latch = new CountDownLatch(3);
+    @Override
+    public void run(String... args) throws Exception {
+        this.template.send("myTopic", "foo1");
+        this.template.send("myTopic", "foo2");
+        this.template.send("myTopic", "foo3");
+        log.info("All sent");
+    }
 
-	@Override
-	public void run(String... args) throws Exception {
-		this.template.send("myTopic", "foo1");
-		this.template.send("myTopic", "foo2");
-		this.template.send("myTopic", "foo3");
-		latch.await(60, TimeUnit.SECONDS);
-		log.info("All received");
-	}
+    @KafkaListener(topics = "myTopic")
+    public void listenOnRaw(ConsumerRecord<?, ?> cr) throws Exception {
+        log.info(cr.toString());
+    }
 
-	@KafkaListener(topics = "myTopic")
-	public void listen(ConsumerRecord<?, ?> cr) throws Exception {
-		log.info(cr.toString());
-		latch.countDown();
-	}
+    @KafkaListener(topics = "myTopic")
+    public void listenOnValue(String value) throws Exception {
+        log.info(value);
+    }
 
 }
 

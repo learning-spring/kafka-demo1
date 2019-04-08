@@ -20,17 +20,22 @@ sourceCompatibility = '1.8'
 
 repositories {
 	mavenCentral()
+	maven { url 'https://repo.spring.io/libs-milestone' }
 }
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter'
 	implementation 'org.springframework.kafka:spring-kafka'
 	runtimeOnly 'org.springframework.boot:spring-boot-devtools'
+    // used for kafka jsonSerializer
+    implementation 'com.fasterxml.jackson.core:jackson-databind'
 
-	//lombok compile
+    //lombok compile
 	compileOnly 'org.projectlombok:lombok'
 
 	//test dependencies
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.kafka:spring-kafka-test'
+
+
 }
